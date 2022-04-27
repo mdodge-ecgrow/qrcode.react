@@ -32,8 +32,8 @@
   "files": [
     "lib"
   ],
-  "dependencies": {},
   "peerDependencies": {
+    "@react-pdf/renderer": "^2.0.16",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
@@ -67,5 +67,8 @@
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     }
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^2.1.1"
   }
 }

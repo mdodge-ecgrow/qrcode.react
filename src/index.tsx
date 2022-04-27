@@ -7,6 +7,7 @@
 import React, {useRef, useEffect} from 'react';
 import type {CSSProperties} from 'react';
 import qrcodegen from './third-party/qrcodegen';
+import {Svg, G, Path} from '@react-pdf/renderer';
 
 type Modules = ReturnType<qrcodegen.QrCode['getModules']>;
 type Excavation = {x: number; y: number; w: number; h: number};
@@ -27,7 +28,7 @@ type QRProps = {
   fgColor: string;
   style?: CSSProperties;
   includeMargin: boolean;
-  usePDFReactFormat:boolean;
+  usePDFReactFormat: boolean;
   imageSettings?: {
     src: string;
     height: number;
@@ -44,7 +45,7 @@ const DEFAULT_PROPS = {
   bgColor: '#FFFFFF',
   fgColor: '#000000',
   includeMargin: false,
-  usePDFReactFormat:false
+  usePDFReactFormat: false,
 };
 
 const MARGIN_SIZE = 4;
@@ -343,7 +344,7 @@ function QRCodeSVG(props: QRProps) {
   // For level 40, 31329 -> 2
   const fgPath = generatePath(cells, margin);
 
-  if(!usePDFReactFormat) {
+  if (!usePDFReactFormat) {
     return (
       <svg
         shapeRendering="crispEdges"
@@ -358,11 +359,7 @@ function QRCodeSVG(props: QRProps) {
     );
   } else {
     return (
-      <Svg
-        height={size}
-        width={size}
-        viewBox={`0 0 ${numCells} ${numCells}`}
-        {...otherProps}>
+      <Svg height={size} width={size} viewBox={`0 0 ${numCells} ${numCells}`}>
         <G fill={bgColor}>
           <Path d={`M0,0 h${numCells}v${numCells}H0z`} />
         </G>
