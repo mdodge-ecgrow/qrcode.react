@@ -27,6 +27,7 @@ type QRProps = {
   fgColor: string;
   style?: CSSProperties;
   includeMargin: boolean;
+  usePDFReactFormat:boolean;
   imageSettings?: {
     src: string;
     height: number;
@@ -43,6 +44,7 @@ const DEFAULT_PROPS = {
   bgColor: '#FFFFFF',
   fgColor: '#000000',
   includeMargin: false,
+  usePDFReactFormat:false
 };
 
 const MARGIN_SIZE = 4;
@@ -301,6 +303,7 @@ function QRCodeSVG(props: QRProps) {
     bgColor,
     fgColor,
     includeMargin,
+    usePDFReactFormat,
     imageSettings,
     ...otherProps
   } = props;
@@ -340,18 +343,36 @@ function QRCodeSVG(props: QRProps) {
   // For level 40, 31329 -> 2
   const fgPath = generatePath(cells, margin);
 
-  return (
-    <svg
-      shapeRendering="crispEdges"
-      height={size}
-      width={size}
-      viewBox={`0 0 ${numCells} ${numCells}`}
-      {...otherProps}>
-      <path fill={bgColor} d={`M0,0 h${numCells}v${numCells}H0z`} />
-      <path fill={fgColor} d={fgPath} />
-      {image}
-    </svg>
-  );
+  if(!usePDFReactFormat) {
+    return (
+      <svg
+        shapeRendering="crispEdges"
+        height={size}
+        width={size}
+        viewBox={`0 0 ${numCells} ${numCells}`}
+        {...otherProps}>
+        <path fill={bgColor} d={`M0,0 h${numCells}v${numCells}H0z`} />
+        <path fill={fgColor} d={fgPath} />
+        {image}
+      </svg>
+    );
+  } else {
+    return (
+      <Svg
+        height={size}
+        width={size}
+        viewBox={`0 0 ${numCells} ${numCells}`}
+        {...otherProps}>
+        <G fill={bgColor}>
+          <Path d={`M0,0 h${numCells}v${numCells}H0z`} />
+        </G>
+        <G fill={fgColor}>
+          <Path d={fgPath} />
+        </G>
+        {image}
+      </Svg>
+    );
+  }
 }
 QRCodeSVG.defaultProps = DEFAULT_PROPS;
 
