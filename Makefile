@@ -19,5 +19,4 @@ examples/iife/demo.js: lib/esm/index.js examples/demo.tsx
 	yarn run build:examples
 
 clean:
-	# this line is causing the install to fail, commenting for now
-	#rm -rf lib examples/iife/demo.js
+	rm -rf lib examples/iife/demo.js
